@@ -1,0 +1,38 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "5.4.1",
+	"FriendlyName": "VAT Tools",
+	"Description": "Tools to bake Vertex Animation Textures",
+	"Category": "Other",
+	"CreatedBy": "Jan Arenz",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": true,
+	"Modules":
+	[
+		{
+			"Name": "VATTools",
+			"Type": "Editor",
+			"LoadingPhase": "PostEngineInit",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	], 
+	"Plugins":  [	
+		{
+			"Name": "AnimToTexture",
+			"Enabled": true
+		},
+		{
+			"Name":  "EditorScriptingUtilities",
+			"Enabled":  true
+		}
+	]
+}
