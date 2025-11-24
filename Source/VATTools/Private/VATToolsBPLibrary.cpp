@@ -17,6 +17,7 @@
 #include "LandscapeSplinesComponent.h"
 #include "LandscapeSplineControlPoint.h"
 #include "Components/SplineComponent.h"
+#include <ComponentReregisterContext.h>
 
 UVATToolsBPLibrary::UVATToolsBPLibrary(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer)
@@ -178,7 +179,7 @@ EMaterialConversionStatus UVATToolsBPLibrary::AddVATMaterialFunction(UMaterial* 
 		// BlendAngleCorrectedNormals
 		UMaterialExpressionMaterialFunctionCall* BlendAngleCorrectedNormals = Cast<UMaterialExpressionMaterialFunctionCall>(UMaterialEditingLibrary::CreateMaterialExpression(Material, UMaterialExpressionMaterialFunctionCall::StaticClass()));
 
-		UObject* MF = FStringAssetReference("/Engine/Functions/Engine_MaterialFunctions02/Utility/BlendAngleCorrectedNormals.BlendAngleCorrectedNormals").TryLoad();
+		UObject* MF = FSoftObjectPath("/Engine/Functions/Engine_MaterialFunctions02/Utility/BlendAngleCorrectedNormals.BlendAngleCorrectedNormals").TryLoad();
 		if (!MF)
 		{
 			UE_LOG(LogTemp, Error, TEXT("Unable to find BlendAngleCorrectedNormals"));
@@ -194,7 +195,7 @@ EMaterialConversionStatus UVATToolsBPLibrary::AddVATMaterialFunction(UMaterial* 
 		// Material Attribute Layers
 		UMaterialExpressionMaterialAttributeLayers* MaterialAttributeLayers = Cast<UMaterialExpressionMaterialAttributeLayers>(UMaterialEditingLibrary::CreateMaterialExpression(Material, UMaterialExpressionMaterialAttributeLayers::StaticClass()));
 
-		UObject* ML = FStringAssetReference("/AnimToTexture/Materials/ML_BoneAnimation.ML_BoneAnimation").TryLoad();
+		UObject* ML = FSoftObjectPath("/AnimToTexture/Materials/ML_BoneAnimation.ML_BoneAnimation").TryLoad();
 		if (!ML)
 		{
 			UE_LOG(LogTemp, Error, TEXT("Unable to find ML_BoneAnimation"));
@@ -228,9 +229,7 @@ EMaterialConversionStatus UVATToolsBPLibrary::AddVATMaterialFunction(UMaterial* 
 		BlendAngleCorrectedNormals->GetInput(0)->Connect(1, GetMaterialAttributesBA);
 		GetMaterialAttributesBA->GetInput(0)->Connect(0, MaterialAttributeLayers);
 
-
-		Material->ForceRecompileForRendering();
-		Material->EnsureIsComplete();
+		Material->PostEditChange();
 		Material->MarkPackageDirty();
 
 		return EMaterialConversionStatus::SUCCESS;
@@ -239,8 +238,6 @@ EMaterialConversionStatus UVATToolsBPLibrary::AddVATMaterialFunction(UMaterial* 
 
 void UVATToolsBPLibrary::ForceRecompileMaterial(UMaterialInterface* Material)
 {
-	Material->ForceRecompileForRendering();
-	Material->CacheShaders(EMaterialShaderPrecompileMode::Synchronous);
-	Material->EnsureIsComplete();
+	Material->PostEditChange();
 	Material->MarkPackageDirty();
 }
