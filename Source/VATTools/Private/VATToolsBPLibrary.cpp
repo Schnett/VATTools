@@ -10,14 +10,7 @@
 #include "Materials/MaterialExpressionMultiply.h"
 #include "Materials/MaterialExpressionAdd.h"
 
-#include "InstancedFoliageActor.h"
 #include "Engine/StaticMeshActor.h"
-
-#include "Landscape.h"
-#include "LandscapeSplinesComponent.h"
-#include "LandscapeSplineControlPoint.h"
-#include "Components/SplineComponent.h"
-#include <ComponentReregisterContext.h>
 
 UVATToolsBPLibrary::UVATToolsBPLibrary(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer)

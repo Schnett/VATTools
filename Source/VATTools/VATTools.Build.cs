@@ -40,8 +40,6 @@ public class VATTools : ModuleRules
 				"SlateCore",                
 				"MaterialEditor",
                 "EditorScriptingUtilities",
-				"Foliage",
-                "Landscape"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
